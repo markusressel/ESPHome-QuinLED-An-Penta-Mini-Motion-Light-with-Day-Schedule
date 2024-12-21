@@ -11,6 +11,12 @@ and sunset times as well as day/night transition times.
 
 I am using two C4001 24GHz mmWave radar sensor to detect presence.
 
+While it is not cheap, it is capable of flawless detection of presence
+even without motion over quite a lot of distance (I tested up to 4 meters).
+
+It supports configuration via UART, but I simply use it in its default config
+which only needs three wires (per sensor).
+
 ![C4001 24GHz mmWave Sensor](./images/C4001-mmWave.png)
 
 ### Wiring

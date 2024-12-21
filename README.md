@@ -21,6 +21,15 @@ as well as the state of the sun (below or above horizon).
 
 ## Hardware
 
+### LED Controller
+
+This config is setup for a [QuinLED-An-Penta-Mini](https://quinled.info/quinled-an-penta-mini/).
+
+![QuinLED-An-Penta-Mini](https://quinled.info/wp-content/uploads/2024/05/P1063051-Enhanced-NR_website-scaled.jpg)
+
+If you want to use a different controller, this repo should still work, but you will probably
+have to change the `device_base` packages referenced in the main config and update the defined pins.
+
 ### Motion Sensor
 
 I am using two C4001 24GHz mmWave radar sensor to detect presence.

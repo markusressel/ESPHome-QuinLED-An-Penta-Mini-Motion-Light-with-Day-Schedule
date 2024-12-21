@@ -38,9 +38,11 @@ have to change the `device_base` packages referenced in the main config and upda
 
 ### LED Strip
 
-I am using a 5m 24V 120LED/m CCT (Warm White + Cold White) LED Strip:
+I am using a 5m 24V 120LED/m CCT (Warm White + Cold White) LED Strip (`AXM-SL2835WWCW120NP-W245-H95`):
 
-AXM-SL2835WWCW120NP-W245-H95
+![LED Strip](./images/AXM-SL2835WWCW120NP-W245-H95.png)
+
+Although this is a very high CRI strip (>95) my experience with it is mixed, see [here](https://www.reddit.com/r/led/comments/1741sh4/comment/m282rvo/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button).
 
 The range of color temperature settings is reflected by this LED strip (2700K - 5500K). If you
 have a different LED strip, you will have to adjust the `min` and `max` values in the [config.yaml](config.yaml)

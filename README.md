@@ -5,6 +5,11 @@ firmware for a QuinLED-An-Penta-Mini board with a motion sensor to control
 a light based on motion and a day schedule taking into account both sunrise
 and sunset times as well as day/night transition times.
 
+While there is nothing preventing you from connecting a device running this project
+to [Home Assistant](https://www.home-assistant.io/), it is intentionally made in a way that allows it to work fully
+autonomously except for network access (for accessing the web interface) and an
+NTP server to be able to sync the current time.
+
 ## Web Interface
 
 The web interface is provided by ESPHome and can be accessed by navigating to

@@ -11,7 +11,7 @@ and sunset times as well as day/night transition times.
 
 I am using two C4001 24GHz mmWave radar sensor to detect presence.
 
-![C4001 24GHz mmWave Sensor](C4001-mmWave.png)
+![C4001 24GHz mmWave Sensor](./images/C4001-mmWave.png)
 
 ### Wiring
 
@@ -19,4 +19,4 @@ TODO
 
 ## Day/Night Schedule
 
-![Day Night Schedule](DayNight-Schedule.svg)
+![Day Night Schedule](./images/DayNight-Schedule.svg)

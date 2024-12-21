@@ -7,9 +7,15 @@ and sunset times as well as day/night transition times.
 
 ## Web Interface
 
+The web interface is provided by ESPHome and can be accessed by navigating to
+the IP address of the ESPHome device in a web browser.
+
 ![ESPHome Webinterface](images/ESPHome-web-interface.png)
 
 ## Day/Night Schedule
+
+The day/night schedule into account both user-configurable "morning time" and "night time",
+as well as the state of the sun (below or above horizon).
 
 ![Day Night Schedule](./images/DayNight-Schedule.svg)
 

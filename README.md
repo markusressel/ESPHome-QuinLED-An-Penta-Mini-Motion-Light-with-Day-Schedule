@@ -5,6 +5,14 @@ firmware for a QuinLED-An-Penta-Mini board with a motion sensor to control
 a light based on motion and a day schedule taking into account both sunrise
 and sunset times as well as day/night transition times.
 
+## Web Interface
+
+![ESPHome Webinterface](images/ESPHome-web-interface.png)
+
+## Day/Night Schedule
+
+![Day Night Schedule](./images/DayNight-Schedule.svg)
+
 ## Hardware
 
 ### Motion Sensor
@@ -22,7 +30,3 @@ which only needs three wires (per sensor).
 ### Wiring
 
 TODO
-
-## Day/Night Schedule
-
-![Day Night Schedule](./images/DayNight-Schedule.svg)

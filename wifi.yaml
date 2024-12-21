@@ -1,0 +1,5 @@
+wifi:
+  # fast_connect: True  # needed for hidden SSID
+  ssid: !secret esphome_wifi_ssid
+  password: !secret esphome_wifi_pass
+  domain: .domain.local

@@ -1,0 +1,136 @@
+switch:
+  - platform: template
+    name: "Config: Use Presence 1"
+    optimistic: True
+    restore_mode: RESTORE_DEFAULT_ON
+    id: config_use_presence_1
+    on_turn_on:
+      - script.execute: update_presence_state
+    on_turn_off:
+      - script.execute: update_presence_state
+
+  - platform: template
+    name: "Config: Use Presence 2"
+    optimistic: True
+    restore_mode: RESTORE_DEFAULT_ON
+    id: config_use_presence_2
+    on_turn_on:
+      - script.execute: update_presence_state
+    on_turn_off:
+      - script.execute: update_presence_state
+
+number:
+  - platform: template
+    name: "DayNight: Morning Hour"
+    optimistic: true
+    min_value: 1
+    max_value: 12
+    step: 1
+    initial_value: 6
+    restore_value: True
+    id: config_morning_hour
+    on_value:
+      then:
+        - script.execute: update_cycle_stage
+        - script.execute: apply_light_props
+
+  - platform: template
+    name: "DayNight: Night Hour"
+    optimistic: true
+    min_value: 16
+    max_value: 23
+    step: 1
+    initial_value: 22
+    restore_value: True
+    id: config_night_hour
+    on_value:
+      then:
+        - script.execute: update_cycle_stage
+        - script.execute: apply_light_props
+
+  - platform: template
+    name: "Light: Daytime Brightness"
+    optimistic: true
+    min_value: 1
+    max_value: 255
+    step: 1
+    initial_value: 255
+    restore_value: True
+    id: config_daytime_brightness
+    on_value:
+      then:
+        - script.execute: update_cycle_stage
+        - script.execute: apply_light_props
+
+  - platform: template
+    name: "Light: Daytime Color Temperature"
+    device_class: Temperature
+    optimistic: true
+    min_value: 2700
+    max_value: 5500
+    step: 100
+    initial_value: 3500
+    restore_value: True
+    id: config_daytime_color_temp
+    on_value:
+      then:
+        - script.execute: update_cycle_stage
+        - script.execute: apply_light_props
+
+  - platform: template
+    name: "Light: Transition Brightness"
+    optimistic: true
+    min_value: 1
+    max_value: 255
+    step: 1
+    initial_value: 100
+    restore_value: True
+    id: config_transition_brightness
+    on_value:
+      then:
+        - script.execute: update_cycle_stage
+        - script.execute: apply_light_props
+
+  - platform: template
+    name: "Light: Transition Color Temperature"
+    device_class: Temperature
+    optimistic: true
+    min_value: 2700
+    max_value: 5500
+    step: 100
+    initial_value: 3000
+    restore_value: True
+    id: config_transition_color_temp
+    on_value:
+      then:
+        - script.execute: update_cycle_stage
+        - script.execute: apply_light_props
+
+  - platform: template
+    name: "Light: Night Brightness"
+    optimistic: true
+    min_value: 1
+    max_value: 255
+    step: 1
+    initial_value: 30
+    restore_value: True
+    id: config_night_brightness
+    on_value:
+      then:
+        - script.execute: update_cycle_stage
+        - script.execute: apply_light_props
+
+  - platform: template
+    name: "Light: Night Color Temperature"
+    device_class: Temperature
+    optimistic: true
+    min_value: 2700
+    max_value: 5500
+    step: 100
+    initial_value: 2700
+    restore_value: True
+    id: config_night_color_temp
+    on_value:
+      then:
+        - script.execute: update_cycle_stage
+        - script.execute: apply_light_props

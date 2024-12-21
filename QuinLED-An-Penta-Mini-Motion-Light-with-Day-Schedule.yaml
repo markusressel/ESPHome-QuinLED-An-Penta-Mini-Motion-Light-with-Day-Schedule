@@ -1,0 +1,328 @@
+packages:
+  device_base: !include quinled_an_penta.yaml
+  wifi: !include wifi.yaml
+  config: !include config.yaml
+
+esphome:
+  name: quinled-penta-mini-motion-light-with-day-schedule
+  on_boot:
+    priority: -1000.0
+    then:
+      - script.execute: update_presence_state
+
+#Disable logging/UART
+logger:
+  level: DEBUG
+  #level: NONE
+  #baud_rate: 0
+
+mdns:
+  disabled: true
+
+ota:
+  platform: esphome
+  password: !secret esphome_ota_pass
+
+api:
+  reboot_timeout: 60min
+  password: !secret esphome_api_pass
+
+# === Sensors ===
+# Motion Sensor 1 on B3
+# Motion Sensor 2 on B2
+
+# === Lights ===
+# Warm White on L1
+# Cold White on L2
+
+globals:
+  # Defines a stage based on the current time and sun position.
+  # Values: ["day", "transition", "night"]
+  - id: current_cycle_stage
+    type: std::string
+    restore_value: no
+    initial_value: '"night"'
+  - id: last_set_light_brightness
+    type: int
+    restore_value: no
+    initial_value: '100'
+  - id: last_set_light_color_temp
+    type: int
+    restore_value: no
+    initial_value: '2700'
+  - id: current_presence_state
+    type: bool
+    restore_value: no
+    initial_value: 'false'
+  - id: current_light_on_state
+    type: bool
+    restore_value: no
+    initial_value: 'false'
+
+time:
+  - platform: sntp
+    id: sntp_time
+    timezone: "Europe/Berlin"
+    servers:
+      - 0.pool.ntp.org
+      - 1.pool.ntp.org
+      - 2.pool.ntp.org
+    on_time_sync:
+      then:
+        - script.execute: update_presence_state
+
+sun:
+  id: sun_entity
+  latitude: 52.3567474°
+  longitude: 12.7657644°
+  on_sunrise:
+    - then:
+        - script.execute: update_presence_state
+  on_sunset:
+    - then:
+        - script.execute: update_presence_state
+
+web_server:
+  port: 80
+  include_internal: True
+
+i2c:
+  sda: GPIO6
+  scl: GPIO7
+  scan: true
+  id: I2C
+
+script:
+  - id: update_presence_state
+    mode: queued
+    then:
+      - logger.log: Updating Presence State...
+      - globals.set:
+          id: current_presence_state
+          value: !lambda |-
+            bool sensor1 = false;
+            if (id(config_use_presence_1).state) {
+              sensor1 = id(B2).state;
+            }
+            bool sensor2 = false;
+            if (id(config_use_presence_2).state) {
+              sensor2 = id(B3).state;
+            }
+            return sensor1 || sensor2;
+      - logger.log:
+          format: "Combined Presence State: %d"
+          args: [ 'id(current_presence_state)' ]
+          level: INFO
+      - script.execute: apply_presence_state
+
+  - id: apply_presence_state
+    mode: restart
+    then:
+      - logger.log: Applying Presence State...
+      - if:
+          condition:
+            - lambda: 'return id(current_presence_state) == true;'
+          then:
+            - script.execute: update_cycle_stage
+            - script.execute: turn_on_light
+          else:
+            - script.execute: turn_off_light
+
+  - id: update_cycle_stage
+    mode: queued
+    then:
+      - logger.log: Updating Cycle Stage...
+      - globals.set:
+          id: current_cycle_stage
+          value: !lambda |-
+            auto current_time = id(sntp_time).now();
+            bool time_valid = current_time.is_valid();
+            if (time_valid) {
+              return "night";
+            }
+            
+            int night_hour = id(config_night_hour).state;
+            int morning_hour = id(config_morning_hour).state;
+            
+            esphome::sun::Sun* sun = id(sun_entity);
+            bool sun_below_horizon = sun->elevation() < 0;
+            
+            bool before_night_hour = current_time.hour < night_hour;
+            bool before_morning_hour = current_time.hour < morning_hour;
+            
+            if (sun_below_horizon) {
+              if (before_morning_hour) {
+                return "night";
+              } else if (before_night_hour) {
+                return "transition";
+              } else {
+                return "night";
+              }
+            } else {
+              if (before_morning_hour) {
+                return "transition";
+              } else if (before_night_hour) {
+                return "day";
+              } else {
+                return "transition";
+              }
+            }
+      - logger.log:
+          format: "Current Cycle Stage: %s"
+          args: [ 'id(current_cycle_stage).c_str()' ]
+          level: INFO
+      - script.execute: update_light_props
+
+  - id: update_light_props
+    mode: restart
+    then:
+      - logger.log: Updating Light properties...
+      - globals.set:
+          id: last_set_light_brightness
+          value: !lambda |-
+            std::string stage = id(current_cycle_stage);
+            
+            int daytime_brightness = id(config_daytime_brightness).state;
+            int transition_brightness = id(config_transition_brightness).state;
+            int night_brightness = id(config_night_brightness).state;
+            
+            if (stage == "day") {
+              return daytime_brightness;
+            } else if (stage == "transition") {
+              return transition_brightness;
+            } else {
+              return night_brightness;
+            }
+      - globals.set:
+          id: last_set_light_color_temp
+          value: !lambda |-
+            std::string stage = id(current_cycle_stage);
+
+            int daytime_color_temp = id(config_daytime_color_temp).state;
+            int transition_color_temp = id(config_transition_color_temp).state;
+            int night_color_temp = id(config_night_color_temp).state;
+            
+            if (stage == "day") {
+              return daytime_color_temp;
+            } else if (stage == "transition") {
+              return transition_color_temp;
+            } else {
+              return night_color_temp;
+            }
+      - logger.log:
+          format: "Updated light properties: Brightness %.1d ; Color Temperature %.1d"
+          args: [ 'id(last_set_light_brightness)', 'id(last_set_light_color_temp)' ]
+          level: INFO
+
+  - id: apply_light_props
+    mode: restart
+    then:
+      - logger.log: Applying Light properties...
+      - if:
+          condition:
+            - lambda: 'return id(current_light_on_state) == true;'
+          then:
+            - script.execute: turn_on_light
+
+  - id: turn_off_light
+    mode: single
+    then:
+      - logger.log: Turning off light...
+      - light.control:
+          id: light_entity
+          state: off
+          transition_length: 3s
+
+  - id: turn_on_light
+    mode: queued
+    then:
+      - logger.log: Turning on light...
+      - light.control:
+          id: light_entity
+          state: on
+          brightness: !lambda 'return float(id(last_set_light_brightness)) / 255.0;'
+          # conversion from kelvin to mired
+          color_temperature: !lambda 'return 1000000.0 / float(id(last_set_light_color_temp));'
+          transition_length: 1s
+
+# === Sensors ===
+
+binary_sensor:
+  #- platform: gpio
+  #  id: B1
+  #  pin: 2
+  #  name: ${esphome_name}-Button_1
+  #  filters:
+  #    - invert:
+
+  - platform: gpio
+    id: B2
+    pin: 8
+    name: "Sensor: Presence 2"
+    on_state:
+      then:
+        - script.execute: update_presence_state
+
+  - platform: gpio
+    id: B3
+    pin: 9
+    name: "Sensor: Presence 1"
+    on_state:
+      then:
+        - script.execute: update_presence_state
+
+# === Lights ===
+
+output:
+  - platform: ledc
+    pin: GPIO5
+    frequency: 19531Hz
+    id: LED_channel_1
+
+  - platform: ledc
+    pin: GPIO4
+    frequency: 19531Hz
+    id: LED_channel_2
+
+light:
+  - platform: cwww
+    id: light_entity
+    name: "Light"
+    cold_white: LED_channel_1
+    warm_white: LED_channel_2
+    cold_white_color_temperature: 5500 K
+    warm_white_color_temperature: 2700 K
+    constant_brightness: true
+    on_turn_on:
+      then:
+        - globals.set:
+            id: current_light_on_state
+            value: 'true'
+        # relevant for manual light control only, might cause flickering
+        - script.execute: update_cycle_stage
+        - script.execute: apply_light_props
+    on_turn_off:
+      then:
+        - globals.set:
+            id: current_light_on_state
+            value: 'false'
+
+# === System ===
+
+switch:
+  - platform: restart
+    name: "== System: Restart"
+    id: restart_switch
+
+sensor:
+  - platform: uptime
+    name: "== System: Uptime Sensor"
+
+  - platform: wifi_signal
+    name: "== Network: WiFi Signal"
+    update_interval: 60s
+
+  - platform: internal_temperature
+    name: "== System: Internal Temperature"
+    accuracy_decimals: 2
+    update_interval: 30s

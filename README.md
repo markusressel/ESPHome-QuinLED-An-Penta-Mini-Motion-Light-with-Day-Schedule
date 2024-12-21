@@ -14,8 +14,14 @@ the IP address of the ESPHome device in a web browser.
 
 ## Day/Night Schedule
 
-The day/night schedule into account both user-configurable "morning time" and "night time",
-as well as the state of the sun (below or above horizon).
+The day/night schedule takes into account both user-configurable "morning time" and "night time",
+as well as the state of the sun (below or above horizon). Based on these inputs a "schedule state"
+is determined, which defines the brightness and color temperature of the light. The schedule state
+includes the following states:
+
+- `day`
+- `transition`
+- `night`
 
 ![Day Night Schedule](./images/DayNight-Schedule.svg)
 
@@ -29,6 +35,16 @@ This config is setup for a [QuinLED-An-Penta-Mini](https://quinled.info/quinled-
 
 If you want to use a different controller, this repo should still work, but you will probably
 have to change the `device_base` packages referenced in the main config and update the defined pins.
+
+### LED Strip
+
+I am using a 5m 24V 120LED/m CCT (Warm White + Cold White) LED Strip:
+
+AXM-SL2835WWCW120NP-W245-H95
+
+The range of color temperature settings is reflected by this LED strip (2700K - 5500K). If you
+have a different LED strip, you will have to adjust the `min` and `max` values in the [config.yaml](config.yaml)
+accordingly.
 
 ### Motion Sensor
 

@@ -31,6 +31,18 @@ includes the following states:
 ![Day Night Schedule](./images/DayNight-Schedule.svg)
 
 ## Hardware
+
+### Power Cable
+
+To plug in to the wall we need a power cable. You can buy any commonly available
+one and cut of one end to get access to the two leads. I recommend using a cable
+with a ground wire, but it is not strictly necessary (and not supported by the 
+power supply mentioned below).
+
+Example: White 5M Slim EU 2 Prong Port AC Power Cord 
+
+<img alt="Power Cable" src="./images/Power-Cable.png" width="400" />
+
 ### Power Supply
 
 I am using a MeanWell-HDR-150 in the 24V variant. Its meant to be mounted inside of a

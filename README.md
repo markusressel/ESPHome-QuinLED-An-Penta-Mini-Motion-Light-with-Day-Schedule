@@ -99,6 +99,26 @@ The files can be found here: [C4001 Motion Sensor 3D Printable Cases](./3dprints
 
 <img alt="Wiring Diagram" src="./images/Wiring-Diagram.svg" width="400" />
 
+## Software
+
+### Preparing the Environment
+
+1. Install [ESPHome](https://esphome.io/guides/getting_started_command_line.html) on your computer.
+2. Clone this repository.
+3. Copy the `secrets.yaml.example` to `secrets.yaml` and fill in the required values
+
+### Flash the Firmware
+
+1. Connect the QuinLED-An-Penta-Mini to your computer using a USB cable.
+2. Run `esphome rum ./QuinLED-An-Penta-Mini-Motion-Light-with-Day-Schedule.yaml` in the root of this repository.
+3. Follow the instructions to flash the firmware via USB.
+4. After flashing, ensure the device is connected to your network, has an IP address and 
+   you can access its web interface from another device on the same network.
+5. If everything is working, disconnect the USB cable and connect the power cable from the power supply.
+
+And that's it! You should now have a fully autonomous light that turns on when motion is detected
+and adjusts its brightness and color temperature based on the time of day and the state of the sun.
+
 # FAQ
 
 ## The timeout for turning off the light is too short/long

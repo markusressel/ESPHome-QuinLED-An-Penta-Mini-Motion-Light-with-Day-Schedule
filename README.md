@@ -68,3 +68,23 @@ which only needs three wires (per sensor).
 ### Wiring
 
 TODO
+
+
+# FAQ
+
+## The timeout for turning off the light is too short/long
+
+There is no hardcoded timeout built in to this configuration. I would recommend
+taking a closer look at the motion sensors you are using and try to reconfigure them
+if possible. If you are not using the sensors mentioned above I highly recommend 
+checking them out as they have been flawless for me and good presence detection
+is crucial for a good user experience.
+
+## The light does not change brightness when on during state changes (f.ex. day -> transition)
+
+This is expected.
+
+The logic to compute the correct state is only triggered by changes from the motion sensors
+or turning on the light manually. This is intentional to avoid confusing changes to the light
+brightness and color while it is on, as the assumption is that the light will only be on
+for a short amount of time, or changes in motion sensor activity.

@@ -73,6 +73,11 @@ The range of color temperature settings is reflected by this LED strip (2700K - 
 have a different LED strip, you will have to adjust the `min` and `max` values in the [config.yaml](config.yaml)
 accordingly.
 
+This project is currently only setup for a color temperature based LED strip (CCT). I don't know if 
+ESPHome is able to control other LED strip types like RGB or RGBW using a "mireds" value. If so, 
+they also might  just work, otherwise you will have to adjust the logic for calculating and 
+setting the color.
+
 ### Motion Sensor
 
 I am using two C4001 24GHz mmWave radar sensor to detect presence.

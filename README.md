@@ -67,8 +67,7 @@ which only needs three wires (per sensor).
 
 ### Wiring
 
-TODO
-
+![Wiring Diagram](./images/Wiring-Diagram.svg)
 
 # FAQ
 

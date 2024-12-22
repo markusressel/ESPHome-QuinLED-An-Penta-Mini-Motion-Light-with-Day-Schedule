@@ -31,12 +31,20 @@ includes the following states:
 ![Day Night Schedule](./images/DayNight-Schedule.svg)
 
 ## Hardware
+### Power Supply
+
+I am using a MeanWell-HDR-150 in the 24V variant. Its meant to be mounted inside of a
+fuse box, but can also easily be used separately. Compared to other power supplies it has a pretty
+small footprint and is completely fan-less, but it also requires some room around it to "breathe" 
+and cool down.
+
+<img alt="MeanWell HDR-150 150W 24V" src="./images/MeanWell-HDR-150-150W-24V.jpeg" width="400" />
 
 ### LED Controller
 
 This config is setup for a [QuinLED-An-Penta-Mini](https://quinled.info/quinled-an-penta-mini/).
 
-![QuinLED-An-Penta-Mini](https://quinled.info/wp-content/uploads/2024/05/P1063051-Enhanced-NR_website-scaled.jpg)
+<img alt="QuinLED-An-Penta-Mini" src="https://quinled.info/wp-content/uploads/2024/05/P1063051-Enhanced-NR_website-scaled.jpg" width="400" />
 
 If you want to use a different controller, this repo should still work, but you will probably
 have to change the `device_base` packages referenced in the main config and update the defined pins.
@@ -45,7 +53,7 @@ have to change the `device_base` packages referenced in the main config and upda
 
 I am using a 5m 24V 120LED/m CCT (Warm White + Cold White) LED Strip (`AXM-SL2835WWCW120NP-W245-H95`):
 
-![LED Strip](./images/AXM-SL2835WWCW120NP-W245-H95.png)
+<img alt="LED Strip" src="./images/AXM-SL2835WWCW120NP-W245-H95.png" width="400" />
 
 Although this is a very high CRI strip (>95) my experience with it is mixed, see [here](https://www.reddit.com/r/led/comments/1741sh4/comment/m282rvo/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button).
 
@@ -63,11 +71,11 @@ even without motion over quite a lot of distance (I tested up to 4 meters).
 It supports configuration via UART, but I simply use it in its default config
 which only needs three wires (per sensor).
 
-![C4001 24GHz mmWave Sensor](./images/C4001-mmWave.png)
+<img alt="C4001 24GHz mmWave Sensor" src="./images/C4001-mmWave.png" width="300" />
 
 ### Wiring
 
-![Wiring Diagram](./images/Wiring-Diagram.svg)
+<img alt="Wiring Diagram" src="./images/Wiring-Diagram.svg" width="400" />
 
 # FAQ
 

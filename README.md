@@ -105,7 +105,7 @@ The files can be found here: [C4001 Motion Sensor 3D Printable Cases](./3dprints
 
 1. Install [ESPHome](https://esphome.io/guides/getting_started_command_line.html) on your computer.
 2. Clone this repository.
-3. Copy the `secrets.yaml.example` to `secrets.yaml` and fill in the required values
+3. Copy the `secrets.yaml.example` (see [here](./secrets.yaml.example)) to `secrets.yaml` and fill in the required values
 
 ### Flash the Firmware
 

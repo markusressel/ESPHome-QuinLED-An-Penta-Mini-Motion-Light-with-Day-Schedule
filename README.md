@@ -73,6 +73,11 @@ which only needs three wires (per sensor).
 
 <img alt="C4001 24GHz mmWave Sensor" src="./images/C4001-mmWave.png" width="300" />
 
+#### 3D Printed Case
+
+I have designed a 3D printable cases for the sensors mentioned above.  
+The files can be found here: [C4001 Motion Sensor 3D Printable Cases](./3dprints/Motion%20Sensor/)
+
 ### Wiring
 
 <img alt="Wiring Diagram" src="./images/Wiring-Diagram.svg" width="400" />

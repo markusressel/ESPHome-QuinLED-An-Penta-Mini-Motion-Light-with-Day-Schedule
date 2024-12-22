@@ -62,7 +62,7 @@ globals:
 time:
   - platform: sntp
     id: sntp_time
-    timezone: "Europe/Berlin"
+    timezone: !secret time_zone
     servers:
       - 0.pool.ntp.org
       - 1.pool.ntp.org
@@ -73,8 +73,8 @@ time:
 
 sun:
   id: sun_entity
-  latitude: 52.3567474°
-  longitude: 12.7657644°
+  latitude: !secret home_latitude
+  longitude: !secret home_longitude
   on_sunrise:
     - then:
         - script.execute: update_presence_state

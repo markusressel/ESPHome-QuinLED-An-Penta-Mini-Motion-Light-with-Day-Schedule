@@ -4,7 +4,8 @@ packages:
   config: !include config.yaml
 
 esphome:
-  name: quinled-penta-mini-motion-light-with-day-schedule
+  name: motion-light
+  name_add_mac_suffix: true
   on_boot:
     priority: -1000.0
     then:

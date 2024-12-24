@@ -3,6 +3,10 @@ packages:
   wifi: !include wifi.yaml
   config: !include config.yaml
 
+substitutions:
+  color_temp_min_kelvin: "1000"
+  color_temp_max_kelvin: "5500"
+
 esphome:
   name: motion-light
   name_add_mac_suffix: true

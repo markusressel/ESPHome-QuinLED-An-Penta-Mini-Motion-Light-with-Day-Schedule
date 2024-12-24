@@ -66,8 +66,8 @@ number:
     name: "Light: Daytime Color Temperature"
     device_class: Temperature
     optimistic: true
-    min_value: 2700
-    max_value: 5500
+    min_value: ${color_temp_min_kelvin}
+    max_value: ${color_temp_max_kelvin}
     step: 100
     initial_value: 3500
     restore_value: True
@@ -95,8 +95,8 @@ number:
     name: "Light: Transition Color Temperature"
     device_class: Temperature
     optimistic: true
-    min_value: 2700
-    max_value: 5500
+    min_value: ${color_temp_min_kelvin}
+    max_value: ${color_temp_max_kelvin}
     step: 100
     initial_value: 3000
     restore_value: True
@@ -124,8 +124,8 @@ number:
     name: "Light: Night Color Temperature"
     device_class: Temperature
     optimistic: true
-    min_value: 2700
-    max_value: 5500
+    min_value: ${color_temp_min_kelvin}
+    max_value: ${color_temp_max_kelvin}
     step: 100
     initial_value: 2700
     restore_value: True

@@ -1,0 +1,34 @@
+
+output:
+  - platform: ledc
+    pin: GPIO5
+    frequency: 19531Hz
+    id: LED_channel_1
+
+  - platform: ledc
+    pin: GPIO4
+    frequency: 19531Hz
+    id: LED_channel_2
+
+light:
+  - platform: cwww
+    id: light_entity
+    name: "Light"
+    cold_white: LED_channel_1
+    warm_white: LED_channel_2
+    cold_white_color_temperature: 5500 K
+    warm_white_color_temperature: 2700 K
+    constant_brightness: true
+    on_turn_on:
+      then:
+        - globals.set:
+            id: current_light_on_state
+            value: 'true'
+        # relevant for manual light control only, might cause flickering
+        - script.execute: update_cycle_stage
+        - script.execute: apply_light_props
+    on_turn_off:
+      then:
+        - globals.set:
+            id: current_light_on_state
+            value: 'false'

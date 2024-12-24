@@ -1,0 +1,61 @@
+# TODO: make this a proper external component
+#external_components:
+#  - source:
+#      type: git
+#      url: https://github.com/markusressel/CustomRGBWLight
+#      ref: master
+#    components: [ ColorTempRGBWLight ]
+
+esphome:
+  includes:
+    - src/ColorTempRGBWLight.h
+
+output:
+  - platform: ledc
+    pin: GPIO5
+    frequency: 19531Hz
+    id: LED_channel_1
+
+  - platform: ledc
+    pin: GPIO4
+    frequency: 19531Hz
+    id: LED_channel_2
+
+  - platform: ledc
+    pin: GPIO1
+    frequency: 19531Hz
+    id: LED_channel_3
+
+  - platform: ledc
+    pin: GPIO0
+    frequency: 19531Hz
+    id: LED_channel_4
+
+  - platform: ledc
+    pin: GPIO3
+    frequency: 19531Hz
+    id: LED_channel_5
+
+light:
+  - platform: custom
+    lambda: |-
+      auto light = new CustomRGBWLight(id(LED_channel_2), id(LED_channel_3), id(LED_channel_4), id(LED_channel_1));
+      App.register_component(light);
+      return {light};
+    lights:
+      - name: "Light"
+        id: light_entity
+        default_transition_length: 1s
+        on_turn_on:
+          then:
+            - globals.set:
+                id: current_light_on_state
+                value: 'true'
+            # relevant for manual light control only, might cause flickering
+            - script.execute: update_cycle_stage
+            - script.execute: apply_light_props
+        on_turn_off:
+          then:
+            - globals.set:
+                id: current_light_on_state
+                value: 'false'

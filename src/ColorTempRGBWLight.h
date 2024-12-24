@@ -350,7 +350,6 @@ public:
     float colorTemp, brightness;
     state->current_values_as_brightness(&brightness);
     colorTemp = state->current_values.get_color_temperature_kelvin();
-//    colorTemp = state->current_values.get_color_temperature();
     float red, green, blue, cwhite, wwhite;
     state->current_values_as_rgbww(&red, &green, &blue, &cwhite, &wwhite);
 
@@ -370,28 +369,25 @@ public:
     // ESP_LOGD("custom", "  CWhite: %.2f | WWhite: %.2f ", cwhite, wwhite);
 
     if(mode_ == White) {
-//        float colorTempInKelvin = 1000000.0 / colorTemp;
-//        Color color = get_rgbw_from_temperature(colorTempInKelvin);
+      Color color = get_rgbw_from_temperature(colorTemp);
 
-        Color color = get_rgbw_from_temperature(colorTemp);
+      float red = std::min(color.r * brightness, 1.0f);
+      float green = std::min(color.g * brightness, 1.0f);
+      float blue = std::min(color.b * brightness, 1.0f);
+      float white = std::min(color.w * brightness, 1.0f);
 
-        float red = std::min(color.r * brightness, 1.0f);
-        float green = std::min(color.g * brightness, 1.0f);
-        float blue = std::min(color.b * brightness, 1.0f);
-        float white = std::min(color.w * brightness, 1.0f);
+      this->red_output->set_level(red);
+      this->green_output->set_level(green);
+      this->blue_output->set_level(blue);
+      this->white_output->set_level(white);
 
-        this->red_output->set_level(red);
-        this->green_output->set_level(green);
-        this->blue_output->set_level(blue);
-        this->white_output->set_level(white);
-
-        // Store this
+      // Store this
       colorTemp_ = colorTemp;
     } else {
-        this->red_output->set_level(red);
-        this->green_output->set_level(green);
-        this->blue_output->set_level(blue);
-        this->white_output->set_level(0);
+      this->red_output->set_level(red);
+      this->green_output->set_level(green);
+      this->blue_output->set_level(blue);
+      this->white_output->set_level(0);
     }
     this->oldRed = red;
     this->oldGreen = green;

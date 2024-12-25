@@ -320,8 +320,6 @@ public:
     float w;
   } Color;
 
-
-
   Color get_rgb_from_temperature(float kelvin) {
     if (kelvin < TABLE_START_TEMP) kelvin = TABLE_START_TEMP;
     if (kelvin > TABLE_END_TEMP) kelvin = TABLE_END_TEMP;

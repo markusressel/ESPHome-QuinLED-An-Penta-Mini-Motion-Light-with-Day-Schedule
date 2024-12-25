@@ -1,11 +1,14 @@
 packages:
   device_base: !include quinled_an_penta.yaml
   wifi: !include wifi.yaml
+  config: !include config.yaml
+
   # for CCT strip use light-cct.yaml
   # for RGBW strip use light-rgbw.yaml
-  light: !include light-rgbw.yaml
-  ir_remote: !include ir-remote.yaml
-  config: !include config.yaml
+  light: !include light-cct.yaml
+
+  # (optional) IR Remote Control
+  # ir_remote: !include ir-remote.yaml
 
 substitutions:
   # for CCT strip use whatever range your CCT strip supports (e.g. 2700-5500)
@@ -13,6 +16,7 @@ substitutions:
   color_temp_min_kelvin: "1000"
   color_temp_max_kelvin: "5500"
 
+  # (optional) IR Remote Control
   ir_receiver_data_pin: GPIO2
 
 esphome:

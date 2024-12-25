@@ -13,7 +13,8 @@ remote_receiver:
 
   rmt_channel: 2
 
-  dump: all
+#  uncomment to debug incoming IR codes
+#  dump: all
 
   on_lg:
     then:

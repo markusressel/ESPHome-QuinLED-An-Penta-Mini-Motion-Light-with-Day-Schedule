@@ -10,6 +10,19 @@ to [Home Assistant](https://www.home-assistant.io/), it is intentionally made in
 autonomously except for network access (for accessing the web interface) and an
 NTP server to be able to sync the current time.
 
+# Features
+
+- [x] Motion detection
+  - [x] Allows multiple sensors
+- [x] Day/Night schedule
+  - [x] Based on sunrise/sunset times
+  - [x] User-configurable morning and night times
+- [x] User override mode for full manual control
+  - [ ] Automatic reset to schedule each night at 4:00 AM (configurable)
+- [x] Web interface for configuration and quick access
+- [x] (Optional) IR Remote Control integration (see [ESPHome-IR-Light](https://github.com/markusressel/ESPHome-IR-Remote-Light) to add your own remote)
+- [x] (Optional) Fully autonomous operation
+
 ## Web Interface
 
 The web interface is provided by ESPHome and can be accessed by navigating to

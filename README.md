@@ -107,6 +107,10 @@ which only needs three wires (per sensor).
 I have designed a 3D printable cases for the sensors mentioned above.  
 The files can be found here: [C4001 Motion Sensor 3D Printable Cases](./3dprints/Motion%20Sensor/)
 
+### Optional: IR Remote Control
+
+See this project for more information: [ESPHome-IR-Remote-Light](https://github.com/markusressel/ESPHome-IR-Remote-Light)
+
 ### Wiring
 
 <img alt="Wiring Diagram" src="images/Wiring-Diagram.svg" width="400" />

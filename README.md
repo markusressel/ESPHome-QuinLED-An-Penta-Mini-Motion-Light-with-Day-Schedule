@@ -109,6 +109,10 @@ The files can be found here: [C4001 Motion Sensor 3D Printable Cases](./3dprints
 
 ### Optional: IR Remote Control
 
+Digital 38khz IR Infrared Receiver Sensor Module
+
+<img alt="IR Receiver" src="images/IR-Receiver-Module.png" width="300" />
+
 See this project for more information: [ESPHome-IR-Remote-Light](https://github.com/markusressel/ESPHome-IR-Remote-Light)
 
 ### Wiring

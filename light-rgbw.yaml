@@ -51,9 +51,13 @@ light:
             - globals.set:
                 id: current_light_on_state
                 value: 'true'
-            # relevant for manual light control only, might cause flickering
-            - script.execute: update_cycle_stage
-            - script.execute: apply_light_props
+            - if:
+                condition:
+                  - lambda: 'return id(state_user_override_active).state == false;'
+                then:
+                  # relevant for manual light control only, might cause flickering
+                  - script.execute: update_cycle_stage
+                  - script.execute: apply_light_props
         on_turn_off:
           then:
             - globals.set:

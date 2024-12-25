@@ -115,10 +115,44 @@ script:
       - logger.log: User override enabled
       - switch.turn_on: state_user_override_active
 
+  - id: flash_twice
+    then:
+      - if:
+          condition:
+            - lambda: 'return id(current_light_on_state) == false;'
+          then:
+            - light.turn_on:
+                id: light_entity
+                transition_length: 0s
+            - delay: 0.2s
+      - light.turn_off:
+          id: light_entity
+          transition_length: 0s
+      - delay: 0.2s
+      - light.turn_on:
+          id: light_entity
+          transition_length: 0s
+      - delay: 0.2s
+      - light.turn_off:
+          id: light_entity
+          transition_length: 0s
+      - delay: 0.2s
+      - light.turn_on:
+          id: light_entity
+          transition_length: 0s
+      - delay: 0.2s
+
   - id: reset_user_override
     then:
       - logger.log: User override disabled
-      - switch.turn_off: state_user_override_active
+      - if:
+          condition:
+            - switch.is_on: state_user_override_active
+          then:
+            - script.execute: flash_twice
+            - script.wait: flash_twice
+            - switch.turn_off: state_user_override_active
+      - script.execute: update_presence_state
 
   - id: update_presence_state
     mode: queued
@@ -315,6 +349,7 @@ switch:
     restore_mode: ALWAYS_OFF
     id: state_user_override_active
     on_turn_off:
+      - script.execute: reset_user_override
       - script.execute: update_presence_state
 
   - platform: restart

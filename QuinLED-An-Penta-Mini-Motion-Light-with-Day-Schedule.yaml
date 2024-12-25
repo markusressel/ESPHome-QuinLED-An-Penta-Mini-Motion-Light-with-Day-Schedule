@@ -3,14 +3,17 @@ packages:
   wifi: !include wifi.yaml
   # for CCT strip use light-cct.yaml
   # for RGBW strip use light-rgbw.yaml
-  light: !include light-cct.yaml
+  light: !include light-rgbw.yaml
+  ir_remote: !include ir-remote.yaml
   config: !include config.yaml
 
 substitutions:
   # for CCT strip use whatever range your CCT strip supports (e.g. 2700-5500)
   # for RGBW strip use 1000-5500
-  color_temp_min_kelvin: "2700"
+  color_temp_min_kelvin: "1000"
   color_temp_max_kelvin: "5500"
+
+  ir_receiver_data_pin: GPIO2
 
 esphome:
   name: motion-light
@@ -103,6 +106,16 @@ i2c:
   id: I2C
 
 script:
+  - id: enable_user_override
+    then:
+      - logger.log: User override enabled
+      - switch.turn_on: state_user_override_active
+
+  - id: reset_user_override
+    then:
+      - logger.log: User override disabled
+      - switch.turn_off: state_user_override_active
+
   - id: update_presence_state
     mode: queued
     then:
@@ -131,12 +144,18 @@ script:
       - logger.log: Applying Presence State...
       - if:
           condition:
-            - lambda: 'return id(current_presence_state) == true;'
+            - lambda: 'return id(state_user_override_active).state == true;'
           then:
-            - script.execute: update_cycle_stage
-            - script.execute: turn_on_light
+            - logger.log: User override active, skipping light control
           else:
-            - script.execute: turn_off_light
+            - if:
+                condition:
+                  - lambda: 'return id(current_presence_state) == true;'
+                then:
+                  - script.execute: update_cycle_stage
+                  - script.execute: turn_on_light
+                else:
+                  - script.execute: turn_off_light
 
   - id: update_cycle_stage
     mode: queued
@@ -230,7 +249,9 @@ script:
       - logger.log: Applying Light properties...
       - if:
           condition:
-            - lambda: 'return id(current_light_on_state) == true;'
+            - and:
+                - lambda: 'return id(current_light_on_state) == true;'
+                - lambda: 'return id(state_user_override_active).state == false;'
           then:
             - script.execute: turn_on_light
 
@@ -284,6 +305,14 @@ binary_sensor:
 # === System ===
 
 switch:
+  - platform: template
+    name: "State: User Override Active"
+    optimistic: True
+    restore_mode: ALWAYS_OFF
+    id: state_user_override_active
+    on_turn_off:
+      - script.execute: update_presence_state
+
   - platform: restart
     name: "== System: Restart"
     id: restart_switch

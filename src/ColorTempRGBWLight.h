@@ -320,7 +320,9 @@ public:
     float w;
   } Color;
 
-  Color get_rgbw_from_temperature(float kelvin) {
+
+
+  Color get_rgb_from_temperature(float kelvin) {
     if (kelvin < TABLE_START_TEMP) kelvin = TABLE_START_TEMP;
     if (kelvin > TABLE_END_TEMP) kelvin = TABLE_END_TEMP;
 
@@ -339,8 +341,53 @@ public:
     // Calculate the white channel as the average brightness
     float w = (r + g + b) / 3.0f;
 
-    Color color = {r, g, b, w};
+    Color color = {r, g, b, 0};
     return color;
+  }
+
+  Color get_rgbw_from_temperature(float kelvin) {
+    Color result = get_rgb_from_temperature(kelvin);
+    float white_color_temp = 5500.0f;
+    Color white_color_rgb = get_rgb_from_temperature(white_color_temp);
+
+    // Calculate the white channel
+
+    // These values are what the 'white' value would need to
+    // be to get the corresponding color value.
+    float whiteValueForRed = result.r / white_color_rgb.r;
+    float whiteValueForGreen = result.g / white_color_rgb.g;
+    float whiteValueForBlue = result.b / white_color_rgb.b;
+
+    // Set the white value to the highest it can be for the given color
+    // (without over saturating any channel - thus the minimum of them).
+    float minWhiteValue = min(whiteValueForRed,
+                               min(whiteValueForGreen,
+                                   whiteValueForBlue));
+    float Wo = (minWhiteValue <= 1.0f ? minWhiteValue : 1.0f);
+
+    // The rest of the channels will just be the original value minus the
+    // contribution by the white channel.
+
+    float Ro = (result.r - minWhiteValue * white_color_rgb.r);
+    float Go = (result.g - minWhiteValue * white_color_rgb.g);
+    float Bo = (result.b - minWhiteValue * white_color_rgb.b);
+
+    result.r = Ro;
+    result.g = Go;
+    result.b = Bo;
+    result.w = Wo;
+
+    // normalize values to 0.0..1.0 range
+    float max = std::max(std::max(result.r, result.g), std::max(result.b, result.w));
+    float factor = max / 1.0f;
+    if (max < 1.0f) {
+      result.r /= max;
+      result.g /= max;
+      result.b /= max;
+      result.w /= max;
+    }
+
+    return result;
   }
 
   /**
@@ -375,6 +422,8 @@ public:
       float green = std::min(color.g * brightness, 1.0f);
       float blue = std::min(color.b * brightness, 1.0f);
       float white = std::min(color.w * brightness, 1.0f);
+
+//      ESP_LOGD("custom", "  Color Temp: %.2f | Brightness: %.2f | Red: %.2f | Green: %.2f | Blue: %.2f | White: %.2f", colorTemp, brightness, red, green, blue, white);
 
       this->red_output->set_level(red);
       this->green_output->set_level(green);

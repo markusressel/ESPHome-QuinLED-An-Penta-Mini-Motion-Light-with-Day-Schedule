@@ -1,0 +1,123 @@
+substitutions:
+  code_on: "0x00FF22DD"
+  code_off: "0x00FFC23D"
+
+
+remote_receiver:
+  pin:
+    number: ${ir_receiver_data_pin}
+    inverted: true
+    mode:
+      input: true
+      pullup: true
+
+  rmt_channel: 2
+
+  dump: all
+
+  on_lg:
+    then:
+      - if:
+          condition:
+            - lambda: 'return (x.data == 0x00FF22DD);'  # On
+          then:
+            - if:
+                condition:
+                  - lambda: 'return id(current_light_on_state);'
+                then:
+                  - script.execute: reset_user_override
+                else:
+                  - script.execute: enable_user_override
+                  - script.execute: turn_on_light
+      - if:
+          condition:
+            - lambda: 'return (x.data == 0x00FFC23D);'  # Off
+          then:
+            - if:
+                condition:
+                  - lambda: 'return id(current_light_on_state);'
+                then:
+                  - script.execute: enable_user_override
+                  - script.execute: turn_off_light
+                else:
+                  - script.execute: reset_user_override
+
+      - if:
+          condition:
+            - lambda: 'return (x.data == 0x00FFE01F);'  # Brightness 10%
+          then:
+            - script.execute: enable_user_override
+            - globals.set:
+                id: last_set_light_brightness
+                value: '25'
+            - script.execute: turn_on_light
+
+      - if:
+          condition:
+            - lambda: 'return (x.data == 0x00FF906F);'  # Brightness 30%
+          then:
+            - script.execute: enable_user_override
+            - globals.set:
+                id: last_set_light_brightness
+                value: '76'
+            - script.execute: turn_on_light
+
+      - if:
+          condition:
+            - lambda: 'return (x.data == 0x00FF6897);'  # Brightness 50%
+          then:
+            - script.execute: enable_user_override
+            - globals.set:
+                id: last_set_light_brightness
+                value: '127'
+            - script.execute: turn_on_light
+
+      - if:
+          condition:
+            - lambda: 'return (x.data == 0x00FF9867);'  # Brightness 70%
+          then:
+            - script.execute: enable_user_override
+            - globals.set:
+                id: last_set_light_brightness
+                value: '178'
+            - script.execute: turn_on_light
+
+      - if:
+          condition:
+            - lambda: 'return (x.data == 0x00FFB04F);'  # Brightness 100%
+          then:
+            - script.execute: enable_user_override
+            - globals.set:
+                id: last_set_light_brightness
+                value: '255'
+            - script.execute: turn_on_light
+
+      - if:
+          condition:
+            - lambda: 'return (x.data == 0x00FF7A85);'  # Color Temperature "warm"
+          then:
+            - script.execute: enable_user_override
+            - globals.set:
+                id: last_set_light_color_temp
+                value: '${color_temp_min_kelvin}'
+            - script.execute: turn_on_light
+
+      - if:
+          condition:
+            - lambda: 'return (x.data == 0x00FF18E7);'  # Color Temperature "mixed"
+          then:
+            - script.execute: enable_user_override
+            - globals.set:
+                id: last_set_light_color_temp
+                value: !lambda 'return (int(${color_temp_max_kelvin}) + int(${color_temp_min_kelvin})) / 2;'
+            - script.execute: turn_on_light
+
+      - if:
+          condition:
+            - lambda: 'return (x.data == 0x00FF30CF);'  # Color Temperature "cold"
+          then:
+            - script.execute: enable_user_override
+            - globals.set:
+                id: last_set_light_color_temp
+                value: '${color_temp_max_kelvin}'
+            - script.execute: turn_on_light

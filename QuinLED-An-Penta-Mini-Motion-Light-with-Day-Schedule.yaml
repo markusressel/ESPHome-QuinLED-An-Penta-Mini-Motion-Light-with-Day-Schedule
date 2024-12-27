@@ -166,11 +166,11 @@ script:
           value: !lambda |-
             bool sensor1 = false;
             if (id(config_use_presence_1).state) {
-              sensor1 = id(B2).state;
+              sensor1 = id(B3).state;
             }
             bool sensor2 = false;
             if (id(config_use_presence_2).state) {
-              sensor2 = id(B3).state;
+              sensor2 = id(B2).state;
             }
             return sensor1 || sensor2;
       - logger.log:
@@ -208,7 +208,7 @@ script:
             auto current_time = id(sntp_time).now();
             bool time_valid = current_time.is_valid();
             if (!time_valid) {
-              ESP_LOGW(TAG, "Time is not valid, defaulting to night");
+              ESP_LOGW("update_cycle_stage", "Time is not valid, defaulting to night");
               return "night";
             }
             

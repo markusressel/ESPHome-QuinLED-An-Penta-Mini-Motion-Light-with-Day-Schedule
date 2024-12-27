@@ -13,8 +13,11 @@ packages:
 substitutions:
   # for CCT strip use whatever range your CCT strip supports (e.g. 2700-5500)
   # for RGBW strip use 1000-5500
-  color_temp_min_kelvin: "1000"
+  color_temp_min_kelvin: "2700"
   color_temp_max_kelvin: "5500"
+
+  # PIR sensor
+  pir_off_latency: "1"  # seconds
 
   # (optional) IR Remote Control
   ir_receiver_data_pin: GPIO2
@@ -204,7 +207,8 @@ script:
           value: !lambda |-
             auto current_time = id(sntp_time).now();
             bool time_valid = current_time.is_valid();
-            if (time_valid) {
+            if (!time_valid) {
+              ESP_LOGW(TAG, "Time is not valid, defaulting to night");
               return "night";
             }
             
@@ -326,16 +330,24 @@ binary_sensor:
 
   - platform: gpio
     id: B2
-    pin: 8
     name: "Sensor: Presence 2"
+    device_class: motion
+    pin:
+      number: 8
+    filters:
+      - delayed_off: !lambda 'return ${pir_off_latency} * 1000.0;'
     on_state:
       then:
         - script.execute: update_presence_state
 
   - platform: gpio
     id: B3
-    pin: 9
     name: "Sensor: Presence 1"
+    device_class: motion
+    pin:
+      number: 9
+    filters:
+      - delayed_off: !lambda 'return ${pir_off_latency} * 1000.0;'
     on_state:
       then:
         - script.execute: update_presence_state

@@ -1,5 +1,5 @@
 wifi:
   # fast_connect: True  # needed for hidden SSID
-  ssid: !secret wifi_ssid
-  password: !secret wifi_pass
   domain: .domain.local
+
+captive_portal:

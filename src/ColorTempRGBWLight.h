@@ -269,6 +269,7 @@ static const float blackbody_color[] = {
  * https://gist.github.com/triphoppingman/76153ddf58072b10e229e9147b2bdf72
  * Thx to:
  * https://gist.github.com/petrklus/b1f427accdf7438606a6?permalink_comment_id=5332821#gistcomment-5332821
+ * https://www.dmurph.com/posts/2021/1/cabinet-light-3.html
  */
 class CustomRGBWLight : public Component, public LightOutput {
 public:

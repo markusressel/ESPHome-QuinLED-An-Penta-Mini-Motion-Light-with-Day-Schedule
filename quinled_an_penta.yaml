@@ -12,3 +12,29 @@ i2c:
   scl: GPIO7
   scan: true
   id: I2C
+
+output:
+  - platform: ledc
+    pin: GPIO5
+    frequency: 19531Hz
+    id: LED_channel_1
+
+  - platform: ledc
+    pin: GPIO4
+    frequency: 19531Hz
+    id: LED_channel_2
+
+  - platform: ledc
+    pin: GPIO1
+    frequency: 19531Hz
+    id: LED_channel_3
+
+  - platform: ledc
+    pin: GPIO0
+    frequency: 19531Hz
+    id: LED_channel_4
+
+  - platform: ledc
+    pin: GPIO3
+    frequency: 19531Hz
+    id: LED_channel_5

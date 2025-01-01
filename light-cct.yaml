@@ -1,15 +1,4 @@
 
-output:
-  - platform: ledc
-    pin: GPIO5
-    frequency: 19531Hz
-    id: LED_channel_1
-
-  - platform: ledc
-    pin: GPIO4
-    frequency: 19531Hz
-    id: LED_channel_2
-
 light:
   - platform: cwww
     id: light_entity

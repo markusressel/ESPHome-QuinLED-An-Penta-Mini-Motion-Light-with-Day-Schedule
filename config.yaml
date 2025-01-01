@@ -98,7 +98,7 @@ number:
     min_value: ${color_temp_min_kelvin}
     max_value: ${color_temp_max_kelvin}
     step: 100
-    initial_value: ${(color_temp_min_kelvin + color_temp_max_kelvin) / 2}
+    initial_value: "${color_temp_min_kelvin}"
     restore_value: True
     id: config_transition_color_temp
     on_value:

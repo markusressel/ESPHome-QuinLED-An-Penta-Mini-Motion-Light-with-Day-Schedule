@@ -106,12 +106,6 @@ web_server:
   port: 80
   include_internal: True
 
-i2c:
-  sda: GPIO6
-  scl: GPIO7
-  scan: true
-  id: I2C
-
 script:
   - id: enable_user_override
     then:

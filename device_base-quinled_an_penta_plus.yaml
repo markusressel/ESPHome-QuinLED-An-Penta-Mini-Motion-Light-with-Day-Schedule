@@ -19,3 +19,29 @@ ethernet:
   mdio_pin: GPIO18
   clk_mode: GPIO17_OUT
   phy_addr: 0
+
+output:
+  - platform: ledc
+    pin: GPIO33
+    frequency: 19531Hz
+    id: LED_channel_1
+
+  - platform: ledc
+    pin: GPIO32
+    frequency: 19531Hz
+    id: LED_channel_2
+
+  - platform: ledc
+    pin: GPIO12
+    frequency: 19531Hz
+    id: LED_channel_3
+
+  - platform: ledc
+    pin: GPIO4
+    frequency: 19531Hz
+    id: LED_channel_4
+
+  - platform: ledc
+    pin: GPIO2
+    frequency: 19531Hz
+    id: LED_channel_5

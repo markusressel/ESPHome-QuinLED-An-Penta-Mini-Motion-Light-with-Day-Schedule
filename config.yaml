@@ -69,7 +69,7 @@ number:
     min_value: ${color_temp_min_kelvin}
     max_value: ${color_temp_max_kelvin}
     step: 100
-    initial_value: 3500
+    initial_value: ${color_temp_min_kelvin}
     restore_value: True
     id: config_daytime_color_temp
     on_value:
@@ -98,7 +98,7 @@ number:
     min_value: ${color_temp_min_kelvin}
     max_value: ${color_temp_max_kelvin}
     step: 100
-    initial_value: 3000
+    initial_value: ${(color_temp_min_kelvin + color_temp_max_kelvin) / 2}
     restore_value: True
     id: config_transition_color_temp
     on_value:
@@ -127,7 +127,7 @@ number:
     min_value: ${color_temp_min_kelvin}
     max_value: ${color_temp_max_kelvin}
     step: 100
-    initial_value: 2700
+    initial_value: ${color_temp_min_kelvin}
     restore_value: True
     id: config_night_color_temp
     on_value:

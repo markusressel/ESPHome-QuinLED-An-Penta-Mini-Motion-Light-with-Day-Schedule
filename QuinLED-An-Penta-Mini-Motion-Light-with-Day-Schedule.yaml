@@ -1,14 +1,21 @@
 packages:
-  device_base: !include device_base-quinled_an_penta.yaml
-  wifi: !include wifi.yaml
+  device_base: !include packages/device/quinled_an_penta_mini.yaml
   config: !include config.yaml
 
-  # for CCT strip use light-cct.yaml
-  # for RGBW strip use light-rgbw.yaml
-  light: !include light-cct.yaml
+  # for WiFi use packages/network/wifi.yaml
+  # for Ethernet use packages/network/ethernet.yaml (cannot be used together with WiFi)
+  network: !include packages/network/wifi.yaml
+
+  # for using an NTP server (without Home Assistant), use packages/time/sntp.yaml
+  # if you are running Home Assistant, use packages/time/homeassistant.yaml
+  time: !include packages/time/sntp.yaml
+
+  # for CCT strip use cct.yaml
+  # for RGBW strip use rgbw.yaml
+  light: !include packages/light/cct.yaml
 
   # (optional) IR Remote Control
-  # ir_remote: !include ir-remote.yaml
+  ir_remote: !include packages/ir-remote.yaml
 
 substitutions:
   # for CCT strip use whatever range your CCT strip supports (e.g. 2700-5500)
@@ -78,18 +85,6 @@ globals:
     type: bool
     restore_value: no
     initial_value: 'false'
-
-time:
-  - platform: sntp
-    id: sntp_time
-    timezone: !secret time_zone
-    servers:
-      - 0.pool.ntp.org
-      - 1.pool.ntp.org
-      - 2.pool.ntp.org
-    on_time_sync:
-      then:
-        - script.execute: update_presence_state
 
 sun:
   id: sun_entity
@@ -199,7 +194,7 @@ script:
       - globals.set:
           id: current_cycle_stage
           value: !lambda |-
-            auto current_time = id(sntp_time).now();
+            auto current_time = id(time_entity).now();
             bool time_valid = current_time.is_valid();
             if (!time_valid) {
               ESP_LOGW("update_cycle_stage", "Time is not valid, defaulting to night");

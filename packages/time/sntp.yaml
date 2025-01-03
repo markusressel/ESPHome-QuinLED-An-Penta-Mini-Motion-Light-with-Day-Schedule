@@ -1,0 +1,11 @@
+time:
+  - platform: sntp
+    id: time_entity
+    timezone: !secret time_zone
+    servers:
+      - 0.pool.ntp.org
+      - 1.pool.ntp.org
+      - 2.pool.ntp.org
+    on_time_sync:
+      then:
+        - script.execute: update_presence_state

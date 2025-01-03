@@ -1,0 +1,7 @@
+time:
+  - platform: homeassistant
+    id: time_entity
+    timezone: !secret time_zone
+    on_time_sync:
+      then:
+        - script.execute: update_presence_state

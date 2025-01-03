@@ -12,16 +12,20 @@ NTP server to be able to sync the current time.
 
 # Features
 
-- [x] Motion detection
-  - [x] Allows multiple sensors
+- [x] Based on high quality QuinLED-An-Penta controller
+  - [x] Supports both Mini and Plus Variants 
+- [x] Supports both CCT and RGBW LED strips
+- [x] Motion detection using multiple C4001 24GHz mmWave radar sensors
 - [x] Day/Night schedule
   - [x] Based on sunrise/sunset times
-  - [x] User-configurable morning and night times
+  - [x] User-configurable morning and nighttime
+  - [x] User-configurable brightness and color temperature
+- [x] Web interface for configuration and quick access
+  - [x] Fully autonomous operation if desired, no need for Home Assistant
+- [x] (Optional) IR Remote Control integration (see [ESPHome-IR-Light](https://github.com/markusressel/ESPHome-IR-Remote-Light) to add your own remote)
 - [x] User override mode for full manual control
   - [ ] Automatic reset to schedule each night at 4:00 AM (configurable)
-- [x] Web interface for configuration and quick access
-- [x] (Optional) IR Remote Control integration (see [ESPHome-IR-Light](https://github.com/markusressel/ESPHome-IR-Remote-Light) to add your own remote)
-- [x] (Optional) Fully autonomous operation
+
 
 ## Web Interface
 

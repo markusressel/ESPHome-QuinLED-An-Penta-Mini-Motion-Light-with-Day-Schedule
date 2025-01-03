@@ -10,8 +10,8 @@ packages:
   # if you are running Home Assistant, use packages/time/homeassistant.yaml
   time: !include packages/time/sntp.yaml
 
-  # for CCT strip use cct.yaml
-  # for RGBW strip use rgbw.yaml
+  # for CCT strip use packages/light/cct.yaml
+  # for RGBW strip use packages/light/rgbw.yaml
   light: !include packages/light/cct.yaml
 
   # (optional) IR Remote Control

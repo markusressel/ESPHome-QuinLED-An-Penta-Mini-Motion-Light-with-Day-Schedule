@@ -75,8 +75,12 @@ This config is setup for a [QuinLED-An-Penta-Mini](https://quinled.info/quinled-
 
 <img alt="QuinLED-An-Penta-Mini" src="https://quinled.info/wp-content/uploads/2024/05/P1063051-Enhanced-NR_website-scaled.jpg" width="400" />
 
+As well as an [QuinLED-An-Penta-Plus](https://quinled.info/quinled-an-penta-plus/).
+
+<img alt="QuinLED-An-Penta-Plus" src="https://quinled.info/wp-content/uploads/2024/12/P1064911-Enhanced-NR-scaled.jpg" width="400" />
+
 If you want to use a different controller, this repo should still work, but you will probably
-have to change the `device_base` packages referenced in the main config and update the defined pins.
+have to change the `device_base` package referenced in the main config and update the defined pins.
 
 ### LED Strip
 

@@ -105,6 +105,10 @@ I am using two C4001 24GHz mmWave radar sensor to detect presence.
 While it is not cheap, it is capable of flawless detection of presence
 even without motion over quite a lot of distance (I tested up to 4 meters).
 
+Be aware that this sensor is actively sending out a signal to detect presence,
+so using multiple of them in proximity or oriented at each other might cause interference
+that could lead to false positives.
+
 It supports configuration via UART, but I simply use it in its default config
 which only needs three wires (per sensor).
 

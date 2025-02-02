@@ -50,7 +50,7 @@ remote_receiver:
             - script.execute: enable_user_override
             - globals.set:
                 id: last_set_light_brightness
-                value: '25'
+                value: '${ir_10_percent_brightness}'
             - script.execute: turn_on_light
 
       - if:
@@ -60,7 +60,7 @@ remote_receiver:
             - script.execute: enable_user_override
             - globals.set:
                 id: last_set_light_brightness
-                value: '76'
+                value: '${ir_30_percent_brightness}'
             - script.execute: turn_on_light
 
       - if:
@@ -70,7 +70,7 @@ remote_receiver:
             - script.execute: enable_user_override
             - globals.set:
                 id: last_set_light_brightness
-                value: '127'
+                value: '${ir_50_percent_brightness}'
             - script.execute: turn_on_light
 
       - if:
@@ -80,7 +80,7 @@ remote_receiver:
             - script.execute: enable_user_override
             - globals.set:
                 id: last_set_light_brightness
-                value: '178'
+                value: '${ir_70_percent_brightness}'
             - script.execute: turn_on_light
 
       - if:
@@ -90,7 +90,7 @@ remote_receiver:
             - script.execute: enable_user_override
             - globals.set:
                 id: last_set_light_brightness
-                value: '255'
+                value: '${ir_100_percent_brightness}'
             - script.execute: turn_on_light
 
       - if:

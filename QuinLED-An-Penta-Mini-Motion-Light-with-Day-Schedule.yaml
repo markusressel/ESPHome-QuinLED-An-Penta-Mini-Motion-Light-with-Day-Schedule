@@ -10,24 +10,33 @@ packages:
   # if you are running Home Assistant, use packages/time/homeassistant.yaml
   time: !include packages/time/sntp.yaml
 
-  # for CCT strip use packages/light/cct.yaml
-  # for RGBW strip use packages/light/rgbw.yaml
-  light: !include packages/light/cct.yaml
+  light: !include
+    # for CCT strip use packages/light/cct.yaml
+    # for RGBW strip use packages/light/rgbw.yaml
+    file: packages/light/cct.yaml
+    vars:
+      # for CCT strip use whatever range your CCT strip supports (e.g. 2700-5500)
+      # for RGBW strip use 1000-5500
+      color_temp_min_kelvin: "2700"
+      color_temp_max_kelvin: "5500"
 
   # (optional) IR Remote Control
-  ir_remote: !include packages/ir-remote.yaml
+  ir_remote: !include
+    file: packages/ir-remote.yaml
+    vars:
+      ir_receiver_data_pin: GPIO2
+      ir_10_percent_brightness: "25"
+      ir_30_percent_brightness: "76"
+      ir_50_percent_brightness: "127"
+      ir_70_percent_brightness: "178"
+      ir_100_percent_brightness: "255"
+      ir_color_temp_warm: "2700"
+      ir_color_temp_mixed: "4100"
+      ir_color_temp_cold: "5500"
 
 substitutions:
-  # for CCT strip use whatever range your CCT strip supports (e.g. 2700-5500)
-  # for RGBW strip use 1000-5500
-  color_temp_min_kelvin: "2700"
-  color_temp_max_kelvin: "5500"
-
   # PIR sensor
   pir_off_latency: "1"  # seconds
-
-  # (optional) IR Remote Control
-  ir_receiver_data_pin: GPIO2
 
 esphome:
   name: motion-light

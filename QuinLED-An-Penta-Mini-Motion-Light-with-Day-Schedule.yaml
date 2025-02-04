@@ -314,7 +314,7 @@ script:
           brightness: !lambda 'return float(id(last_set_light_brightness)) / 255.0;'
           # conversion from kelvin to mired
           color_temperature: !lambda 'return 1000000.0 / float(id(last_set_light_color_temp));'
-          transition_length: 1s
+          transition_length: 500ms
 
 # === Sensors ===
 

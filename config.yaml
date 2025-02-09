@@ -136,6 +136,26 @@ number:
         - script.execute: apply_light_props
 
   - platform: template
+    name: "Light: Turn On Transition Duration MS"
+    optimistic: true
+    min_value: 0
+    max_value: 10000
+    step: 100
+    initial_value: 500
+    restore_value: True
+    id: config_turn_on_transition_duration_ms
+
+  - platform: template
+    name: "Light: Turn Off Transition Duration MS"
+    optimistic: true
+    min_value: 0
+    max_value: 10000
+    step: 100
+    initial_value: 5000
+    restore_value: True
+    id: config_turn_off_transition_duration_ms
+
+  - platform: template
     name: "Motion: PID Off Delay"
     optimistic: true
     min_value: 0

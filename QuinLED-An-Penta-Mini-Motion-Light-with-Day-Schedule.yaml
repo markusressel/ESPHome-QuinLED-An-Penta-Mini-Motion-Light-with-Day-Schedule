@@ -298,7 +298,7 @@ script:
       - light.control:
           id: light_entity
           state: off
-          transition_length: 3s
+          transition_length: !lambda 'return float(id(config_turn_off_transition_duration_ms).state);'
 
   - id: turn_on_light
     mode: queued
@@ -310,7 +310,7 @@ script:
           brightness: !lambda 'return float(id(last_set_light_brightness)) / 255.0;'
           # conversion from kelvin to mired
           color_temperature: !lambda 'return 1000000.0 / float(id(last_set_light_color_temp));'
-          transition_length: 500ms
+          transition_length: !lambda 'return float(id(config_turn_on_transition_duration_ms).state);'
 
 # === Sensors ===
 

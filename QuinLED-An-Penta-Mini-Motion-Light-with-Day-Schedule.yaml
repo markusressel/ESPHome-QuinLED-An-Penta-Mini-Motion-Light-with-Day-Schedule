@@ -34,10 +34,6 @@ packages:
       ir_color_temp_mixed: "4100"
       ir_color_temp_cold: "5500"
 
-substitutions:
-  # PIR sensor
-  pir_off_latency: "1"  # seconds
-
 esphome:
   name: motion-light
   name_add_mac_suffix: true
@@ -333,7 +329,7 @@ binary_sensor:
     pin:
       number: 8
     filters:
-      - delayed_off: !lambda 'return ${pir_off_latency} * 1000.0;'
+      - delayed_off: !lambda 'return id(config_pid_off_delay) * 1000.0;'
     on_state:
       then:
         - script.execute: update_presence_state
@@ -345,7 +341,7 @@ binary_sensor:
     pin:
       number: 9
     filters:
-      - delayed_off: !lambda 'return ${pir_off_latency} * 1000.0;'
+      - delayed_off: !lambda 'return id(config_pid_off_delay) * 1000.0;'
     on_state:
       then:
         - script.execute: update_presence_state

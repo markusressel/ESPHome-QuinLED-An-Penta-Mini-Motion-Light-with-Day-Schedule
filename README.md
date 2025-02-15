@@ -153,6 +153,12 @@ and adjusts its brightness and color temperature based on the time of day and th
 
 # FAQ
 
+## The lights turn on too slowly
+
+The transition duration can be configured via the web interface for both the
+turning off and on transitions. The default values are rather slow to allow the
+human eye to adapt to the new lighting environment more easily.
+
 ## The timeout for turning off the light is too short/long
 
 Besides any delay applied by the sensors themselves, you can

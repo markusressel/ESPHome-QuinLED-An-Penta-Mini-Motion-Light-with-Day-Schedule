@@ -155,16 +155,13 @@ and adjusts its brightness and color temperature based on the time of day and th
 
 ## The timeout for turning off the light is too short/long
 
-There is no hardcoded timeout built in to this configuration.
-
-The sensor input is applied immediately when detected. If the detection is not working
+Besides any delay applied by the sensors themselves, you can
+configure an additional delay via the web configuration. If this delay is set to
+0 the sensor input is applied immediately on detection. If the detection is not working
 as expected I would recommend taking a closer look at the motion sensors you are using.
 Some let you reconfigure them, others are just bad. If you are not using the sensors 
 mentioned above I highly recommend checking them out as they have been flawless for me
 and good presence detection is crucial for a good user experience.
-
-Of course you can also modify this configuration to add a timeout yourself to make
-non-optimal sensors work better.
 
 ## The light does not change brightness when on during state changes (f.ex. day -> transition)
 

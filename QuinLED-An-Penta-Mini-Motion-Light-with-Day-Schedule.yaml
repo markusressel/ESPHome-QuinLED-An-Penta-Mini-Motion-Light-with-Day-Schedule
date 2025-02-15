@@ -1,6 +1,11 @@
+substitutions:
+  color_temp_min_kelvin: "2700"
+  color_temp_max_kelvin: "5500"
+
 packages:
   device_base: !include packages/device/quinled_an_penta_mini.yaml
-  config: !include config.yaml
+  config: !include
+    file: config.yaml
 
   # for WiFi use packages/network/wifi.yaml
   # for Ethernet use packages/network/ethernet.yaml (cannot be used together with WiFi)

@@ -23,6 +23,6 @@ jobs:
         run: cp secrets.yaml.example secrets.yaml
 
       - name: ESPHome Builder
-        uses: esphome/build-action@v6.0.0
+        uses: esphome/build-action@v7.0.0
         with:
           yaml-file: QuinLED-An-Penta-Mini-Motion-Light-with-Day-Schedule.yaml

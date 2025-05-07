@@ -11,8 +11,6 @@ remote_receiver:
       input: true
       pullup: true
 
-  rmt_channel: 2
-
 #  uncomment to debug incoming IR codes
 #  dump: all
 
